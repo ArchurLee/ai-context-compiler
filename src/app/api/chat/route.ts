@@ -28,7 +28,7 @@ export async function POST(req: Request) {
                 apiKey: aiConfig.customKey || "sk-dummy-key",
                 baseURL: (aiConfig.customBaseUrl || "https://api.openai.com/v1").replace(/\/+$/, "").replace(/\/chat\/completions$/, "").replace(/\/v1$/, "") + "/v1",
             });
-            model = openai(aiConfig.modelId || 'gpt-4o');
+            model = openai.chat(aiConfig.modelId || 'gpt-4o');
         } else if (aiConfig && aiConfig.provider === "anthropic") {
             const anthropic = createAnthropic({
                 apiKey: aiConfig.customKey || "sk-ant-dummy-key",

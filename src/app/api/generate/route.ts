@@ -52,7 +52,7 @@ ${JSON.stringify(structures, null, 2)}
                 baseURL: (aiConfig.customBaseUrl || "https://api.openai.com/v1").replace(/\/+$/, "").replace(/\/chat\/completions$/, "").replace(/\/v1$/, "") + "/v1",
             });
             // Try to default to some known fast/cheap model if not specified
-            model = openai(aiConfig.modelId || 'gpt-4o');
+            model = openai.chat(aiConfig.modelId || 'gpt-4o');
         } else if (aiConfig && aiConfig.provider === "anthropic") {
             // Using custom Anthropic Native Provider
             const anthropic = createAnthropic({
