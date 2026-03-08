@@ -26,13 +26,13 @@ export async function POST(req: Request) {
         if (aiConfig && aiConfig.provider === "openai") {
             const openai = createOpenAI({
                 apiKey: aiConfig.customKey || "sk-dummy-key",
-                baseURL: aiConfig.customBaseUrl || "https://api.openai.com/v1",
+                baseURL: (aiConfig.customBaseUrl || "https://api.openai.com/v1").replace(/\/+$/, "").replace(/\/chat\/completions$/, "").replace(/\/v1$/, "") + "/v1",
             });
             model = openai(aiConfig.modelId || 'gpt-4o');
         } else if (aiConfig && aiConfig.provider === "anthropic") {
             const anthropic = createAnthropic({
                 apiKey: aiConfig.customKey || "sk-ant-dummy-key",
-                baseURL: aiConfig.customBaseUrl || "https://api.anthropic.com/v1",
+                baseURL: (aiConfig.customBaseUrl || "https://api.anthropic.com/v1").replace(/\/+$/, "").replace(/\/v1$/, "") + "/v1",
             });
             model = anthropic(aiConfig.modelId || 'claude-3-5-sonnet-latest');
         } else {

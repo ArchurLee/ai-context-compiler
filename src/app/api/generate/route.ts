@@ -49,7 +49,7 @@ ${JSON.stringify(structures, null, 2)}
             // Using custom OpenAI Compatible Provider (e.g. DeepSeek, Kimi, etc.)
             const openai = createOpenAI({
                 apiKey: aiConfig.customKey || "sk-dummy-key",
-                baseURL: aiConfig.customBaseUrl || "https://api.openai.com/v1",
+                baseURL: (aiConfig.customBaseUrl || "https://api.openai.com/v1").replace(/\/+$/, "").replace(/\/chat\/completions$/, "").replace(/\/v1$/, "") + "/v1",
             });
             // Try to default to some known fast/cheap model if not specified
             model = openai(aiConfig.modelId || 'gpt-4o');
@@ -57,7 +57,7 @@ ${JSON.stringify(structures, null, 2)}
             // Using custom Anthropic Native Provider
             const anthropic = createAnthropic({
                 apiKey: aiConfig.customKey || "sk-ant-dummy-key",
-                baseURL: aiConfig.customBaseUrl || "https://api.anthropic.com/v1",
+                baseURL: (aiConfig.customBaseUrl || "https://api.anthropic.com/v1").replace(/\/+$/, "").replace(/\/v1$/, "") + "/v1",
             });
             model = anthropic(aiConfig.modelId || 'claude-3-5-sonnet-latest');
         } else {
