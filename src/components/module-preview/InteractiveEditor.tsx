@@ -43,7 +43,7 @@ export function InteractiveEditor({ initialContent, onHistoryChange }: Interacti
         }
     } as any);
 
-    const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages } = chat as any;
+    const { messages = [], input = "", handleInputChange, handleSubmit, isLoading = false, setMessages } = (chat || {}) as any;
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
