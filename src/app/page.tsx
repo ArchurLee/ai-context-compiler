@@ -6,6 +6,7 @@ import { SheetStructure } from "@/utils/excel-parser";
 import { ExcelUploader, ExcelStructureViewer } from "@/components/module-excel";
 import { RequirementForm, RequirementFormData } from "@/components/module-form";
 import { MarkdownPreview } from "@/components/module-preview";
+import { InteractiveEditor } from "@/components/module-preview/InteractiveEditor";
 import { Button } from "@/components/ui/button";
 import { ParticleBackground } from "@/components/ui/ParticleBackground";
 import { ApiSettingsDialog, AISettings, defaultSettings } from "@/components/ui/api-settings-dialog";
@@ -28,7 +29,10 @@ export default function Home() {
         body: JSON.stringify({ structures, formData: validFormData, aiConfig: aiSettings }),
       });
 
-      if (!response.ok) throw new Error("生成失败");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "生成失败");
+      }
       if (!response.body) throw new Error("无返回数据流");
 
       const reader = response.body.getReader();
@@ -44,8 +48,7 @@ export default function Home() {
         }
       }
     } catch (error) {
-      console.error(error);
-      setGeneratedText("文档生成过程中出现错误，请检查您的网络与 API Key 配置。");
+      setGeneratedText(`### ❌ 核心总线编译失败\n\n**拦截到的运行时异常**：\n\`\`\`text\n${error instanceof Error ? error.message : "未知网络或代理拦截故障"}\n\`\`\`\n\n**[!] 诊断建议**：\n1. 如果您使用的是默认 Gemini，**国内直连 Vercel 可能会被墙**，请点击右上角齿轮⚙️，切换为【通义千问】/【硅基流动】等国内大模型聚合源，并填入对应的 API Key。\n2. 如果您用的正是国内源，请检查您的 API Key 是否正确填写，或者免费额度是否耗尽。\n3. Vercel 免费版云函数上限时间为 **60秒**，如果填写的文档超级长极有可能触发 \`504 Gateway Timeout\`。`);
     } finally {
       setIsGenerating(false);
     }
@@ -141,7 +144,7 @@ export default function Home() {
 
               <div className="p-8 min-h-[400px]">
                 {generatedText ? (
-                  <MarkdownPreview content={generatedText} />
+                  <InteractiveEditor initialContent={generatedText} />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-[300px] text-zinc-500">
                     <Loader2 className="w-10 h-10 text-[#8B5CF6] animate-spin mb-4" />

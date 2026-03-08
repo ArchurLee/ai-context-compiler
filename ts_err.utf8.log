@@ -1,0 +1,6 @@
+﻿src/components/module-preview/InteractiveEditor.tsx(25,23): error TS2339: Property 'input' does not exist on type 'UseChatHelpers<UIMessage<unknown, UIDataTypes, UITools>>'.
+src/components/module-preview/InteractiveEditor.tsx(25,30): error TS2339: Property 'handleInputChange' does not exist on type 'UseChatHelpers<UIMessage<unknown, UIDataTypes, UITools>>'.
+src/components/module-preview/InteractiveEditor.tsx(25,49): error TS2339: Property 'handleSubmit' does not exist on type 'UseChatHelpers<UIMessage<unknown, UIDataTypes, UITools>>'.
+src/components/module-preview/InteractiveEditor.tsx(25,63): error TS2339: Property 'isLoading' does not exist on type 'UseChatHelpers<UIMessage<unknown, UIDataTypes, UITools>>'.
+src/components/module-preview/InteractiveEditor.tsx(26,9): error TS2353: Object literal may only specify known properties, and 'api' does not exist in type 'UseChatOptions<UIMessage<unknown, UIDataTypes, UITools>>'.
+src/components/module-preview/InteractiveEditor.tsx(59,66): error TS2353: Object literal may only specify known properties, and 'content' does not exist in type 'UIMessage<unknown, UIDataTypes, UITools>'.
